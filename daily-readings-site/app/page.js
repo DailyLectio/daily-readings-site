@@ -9,7 +9,6 @@ export default function Home() {
 
   useEffect(() => {
     const today = new Date().toISOString().slice(0, 10);
-    // use the simplified raw URL format
     const url =
       "https://raw.githubusercontent.com/DailyLectio/daily-catholic-readings-data/main/final_daily_readings_2025_07.json";
 
@@ -25,14 +24,24 @@ export default function Home() {
     })();
   }, []);
 
-  if (!todayData) return <p className="text-center mt-12 text-[#003E6C]">Loading...</p>;
+  if (!todayData)
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-white">
+        <p className="text-[#003E6C]">Loading…</p>
+      </div>
+    );
+
   if (todayData.error)
-    return <p className="text-center mt-12 text-red-600">{todayData.error}</p>;
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-white">
+        <p className="text-red-600">{todayData.error}</p>
+      </div>
+    );
 
   return (
-    <div className="bg-white min-h-screen text-gray-900 flex flex-col">
-      {/* Hero Banner in Marian Blue */}
-      <header className="bg-[#003E6C] py-12 text-center px-6">
+    <div className="flex flex-col min-h-screen bg-white text-gray-900">
+      {/* ————— Hero ————— */}
+      <header className="bg-[#003E6C] text-white p-6 text-center">
         <Image
           src="/faithlinks-logo.png"
           alt="FaithLinks"
@@ -40,33 +49,36 @@ export default function Home() {
           height={60}
           className="mx-auto mb-4"
         />
-        <h1 className="text-4xl font-extrabold text-white mb-2">Daily Reflections</h1>
+        <h1 className="text-3xl font-bold">Daily Reflections</h1>
       </header>
 
-      <div className="flex-grow overflow-auto">
-        {/* Quote Section */}
-        <section className="bg-[#003E6C] px-6 py-10">
-          <blockquote className="text-xl md:text-2xl font-serif italic text-white leading-snug">
+      {/* ————— Main content ————— */}
+      <main className="flex-grow overflow-auto">
+        {/* Quote */}
+        <section className="bg-[#003E6C] text-white p-6">
+          <blockquote className="italic text-xl leading-relaxed">
             &ldquo;{todayData.quote}&rdquo;
           </blockquote>
-          <p className="mt-4 text-right font-semibold text-gray-200">
-            &mdash; {todayData.quote_source || "Scripture"}
-          </p>
+          <p className="mt-2 text-right font-semibold">&mdash; Scripture</p>
         </section>
 
-        {/* Content Blocks on white background */}
-        <section className="px-6 py-8 space-y-12">
+        {/* Summaries */}
+        <section className="p-6 space-y-10">
           <div>
-            <h2 className="text-2xl font-bold text-[#003E6C]">First Reading Summary</h2>
-            <p className="mt-3 leading-relaxed text-gray-800">
+            <h2 className="text-2xl font-bold text-[#003E6C]">
+              First Reading Summary
+            </h2>
+            <p className="mt-2 leading-relaxed text-gray-800">
               {todayData.reading_summary}
             </p>
           </div>
 
           {todayData.psalm_summary && (
-            <div className="bg-[#ECEFF1] p-6 rounded-lg">
-              <h2 className="text-2xl font-bold text-[#003E6C]">Responsorial Psalm</h2>
-              <p className="mt-3 leading-relaxed text-gray-800">
+            <div className="bg-gray-100 p-4 rounded">
+              <h2 className="text-2xl font-bold text-[#003E6C]">
+                Responsorial Psalm
+              </h2>
+              <p className="mt-2 leading-relaxed text-gray-800">
                 {todayData.psalm_summary}
               </p>
             </div>
@@ -74,52 +86,70 @@ export default function Home() {
 
           {todayData.gospel_summary && (
             <div>
-              <h2 className="text-2xl font-bold text-[#003E6C]">Gospel Summary</h2>
-              <p className="mt-3 leading-relaxed text-gray-800">
+              <h2 className="text-2xl font-bold text-[#003E6C]">
+                Gospel Summary
+              </h2>
+              <p className="mt-2 leading-relaxed text-gray-800">
                 {todayData.gospel_summary}
               </p>
             </div>
           )}
 
-          <div className="bg-[#F5F5F5] px-6 py-8 rounded-lg">
-            <h2 className="text-2xl font-bold text-[#003E6C]">Today&rsquo;s Prayer</h2>
-            <p className="mt-4 italic leading-relaxed text-gray-800">
+          <div className="bg-gray-50 p-4 rounded">
+            <h2 className="text-2xl font-bold text-[#003E6C]">
+              Today’s Prayer
+            </h2>
+            <p className="mt-2 italic leading-relaxed text-gray-800">
               {todayData.daily_prayer}
             </p>
           </div>
         </section>
-      </div>
+      </main>
 
-      {/* Action Buttons in footer Marian Blue */}
-      <footer className="px-6 py-8 bg-[#003E6C]">
+      {/* ————— Footer buttons ————— */}
+      <footer className="bg-[#003E6C] p-6">
         <div className="grid gap-4">
-          <Link
-            href={todayData.exegesis_link}
-            className="block py-3 bg-white text-[#003E6C] hover:bg-gray-100 rounded-lg text-center font-semibold"
-          >
-            Deep Dive
-          </Link>
-          <Link
-            href={todayData.saint_reflection_link}
-            className="block py-3 bg-white text-[#003E6C] hover:bg-gray-100 rounded-lg text-center font-semibold"
-          >
-            Saint of the Day
-          </Link>
-          <Link
+          {todayData.exegesis && (
+            <Link
+              href={`/exegesis/${new Date()
+                .toISOString()
+                .slice(0, 10)}`}
+              className="block bg-white text-[#003E6C] py-2 rounded text-center font-semibold"
+            >
+              Deep Dive
+            </Link>
+          )}
+
+          {todayData.saint_reflection && (
+            <Link
+              href={`/saint/${new Date()
+                .toISOString()
+                .slice(0, 10)}`}
+              className="block bg-white text-[#003E6C] py-2 rounded text-center font-semibold"
+            >
+              Saint of the Day
+            </Link>
+          )}
+
+          <a
             href={todayData.usccb_link}
-            className="block py-3 bg-white text-[#003E6C] hover:bg-gray-100 rounded-lg text-center font-semibold"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block bg-white text-[#003E6C] py-2 rounded text-center font-semibold"
           >
             Daily Readings
-          </Link>
+          </a>
+
           <Link
             href="/donate"
-            className="block py-3 bg-white text-[#003E6C] hover:bg-gray-100 rounded-lg text-center font-semibold"
+            className="block bg-white text-[#003E6C] py-2 rounded text-center font-semibold"
           >
             Donate
           </Link>
+
           <Link
             href="/shop"
-            className="block py-3 bg-white text-[#003E6C] hover:bg-gray-100 rounded-lg text-center font-semibold"
+            className="block bg-white text-[#003E6C] py-2 rounded text-center font-semibold"
           >
             Shop Bands
           </Link>
