@@ -1,4 +1,3 @@
-// app/page.js
 "use client";
 
 import { useEffect, useState } from "react";
@@ -10,8 +9,9 @@ export default function Home() {
 
   useEffect(() => {
     const today = new Date().toISOString().slice(0, 10);
+    // use the simplified raw URL format
     const url =
-      "https://raw.githubusercontent.com/DailyLectio/daily-catholic-readings-data/refs/heads/main/final_daily_readings_2025_07.json";
+      "https://raw.githubusercontent.com/DailyLectio/daily-catholic-readings-data/main/final_daily_readings_2025_07.json";
 
     (async () => {
       try {
@@ -45,7 +45,7 @@ export default function Home() {
 
       <div className="flex-grow overflow-auto">
         {/* Quote Section */}
-        <section className="bg-blue-900 px-6 py-10">
+        <section className="bg-[#003E6C] px-6 py-10">
           <blockquote className="text-xl md:text-2xl font-serif italic text-white leading-snug">
             &ldquo;{todayData.quote}&rdquo;
           </blockquote>
@@ -113,13 +113,13 @@ export default function Home() {
           </Link>
           <Link
             href="/donate"
-            className="block py-3 bg-gold-500 hover:bg-gold-600 rounded-lg text-center font-semibold text-[#003E6C]"
+            className="block py-3 bg-white text-[#003E6C] hover:bg-gray-100 rounded-lg text-center font-semibold"
           >
             Donate
           </Link>
           <Link
             href="/shop"
-            className="block py-3 bg-gold-500 hover:bg-gold-600 rounded-lg text-center font-semibold text-[#003E6C]"
+            className="block py-3 bg-white text-[#003E6C] hover:bg-gray-100 rounded-lg text-center font-semibold"
           >
             Shop Bands
           </Link>
