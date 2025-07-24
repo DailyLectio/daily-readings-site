@@ -25,14 +25,14 @@ export default function Home() {
     })();
   }, []);
 
-  if (!todayData) return <p className="text-center mt-12 text-white">Loading...</p>;
+  if (!todayData) return <p className="text-center mt-12 text-[#003E6C]">Loading...</p>;
   if (todayData.error)
-    return <p className="text-center mt-12 text-red-300">{todayData.error}</p>;
+    return <p className="text-center mt-12 text-red-600">{todayData.error}</p>;
 
   return (
-    <div className="bg-orange-600 min-h-screen text-white flex flex-col">
-      {/* Hero Banner */}
-      <header className="py-12 text-center px-6">
+    <div className="bg-white min-h-screen text-gray-900 flex flex-col">
+      {/* Hero Banner in Marian Blue */}
+      <header className="bg-[#003E6C] py-12 text-center px-6">
         <Image
           src="/faithlinks-logo.png"
           alt="FaithLinks"
@@ -40,31 +40,33 @@ export default function Home() {
           height={60}
           className="mx-auto mb-4"
         />
-        <h1 className="text-4xl font-extrabold mb-2">Daily Reflections</h1>
+        <h1 className="text-4xl font-extrabold text-white mb-2">Daily Reflections</h1>
       </header>
 
       <div className="flex-grow overflow-auto">
         {/* Quote Section */}
         <section className="bg-blue-900 px-6 py-10">
-          <blockquote className="text-xl md:text-2xl font-serif italic leading-snug">
-            “{todayData.quote}”
+          <blockquote className="text-xl md:text-2xl font-serif italic text-white leading-snug">
+            &ldquo;{todayData.quote}&rdquo;
           </blockquote>
-          <p className="mt-4 text-right font-semibold">— {todayData.quote_source || "Scripture"}</p>
+          <p className="mt-4 text-right font-semibold text-gray-200">
+            &mdash; {todayData.quote_source || "Scripture"}
+          </p>
         </section>
 
-        {/* Content Blocks */}
+        {/* Content Blocks on white background */}
         <section className="px-6 py-8 space-y-12">
           <div>
-            <h2 className="text-2xl font-bold">First Reading Summary</h2>
-            <p className="mt-3 leading-relaxed text-gray-100">
+            <h2 className="text-2xl font-bold text-[#003E6C]">First Reading Summary</h2>
+            <p className="mt-3 leading-relaxed text-gray-800">
               {todayData.reading_summary}
             </p>
           </div>
 
           {todayData.psalm_summary && (
-            <div className="bg-yellow-500 bg-opacity-20 p-6 rounded-lg">
-              <h2 className="text-2xl font-bold text-gold-700">Responsorial Psalm</h2>
-              <p className="mt-3 leading-relaxed text-white">
+            <div className="bg-[#ECEFF1] p-6 rounded-lg">
+              <h2 className="text-2xl font-bold text-[#003E6C]">Responsorial Psalm</h2>
+              <p className="mt-3 leading-relaxed text-gray-800">
                 {todayData.psalm_summary}
               </p>
             </div>
@@ -72,52 +74,52 @@ export default function Home() {
 
           {todayData.gospel_summary && (
             <div>
-              <h2 className="text-2xl font-bold">Gospel Summary</h2>
-              <p className="mt-3 leading-relaxed text-gray-100">
+              <h2 className="text-2xl font-bold text-[#003E6C]">Gospel Summary</h2>
+              <p className="mt-3 leading-relaxed text-gray-800">
                 {todayData.gospel_summary}
               </p>
             </div>
           )}
 
-          <div className="bg-blue-900 px-6 py-8 rounded-lg">
-            <h2 className="text-2xl font-bold">Today's Prayer</h2>
-            <p className="mt-4 italic leading-relaxed">
+          <div className="bg-[#F5F5F5] px-6 py-8 rounded-lg">
+            <h2 className="text-2xl font-bold text-[#003E6C]">Today&rsquo;s Prayer</h2>
+            <p className="mt-4 italic leading-relaxed text-gray-800">
               {todayData.daily_prayer}
             </p>
           </div>
         </section>
       </div>
 
-      {/* Action Buttons */}
-      <footer className="px-6 py-8 bg-orange-700">
+      {/* Action Buttons in footer Marian Blue */}
+      <footer className="px-6 py-8 bg-[#003E6C]">
         <div className="grid gap-4">
           <Link
             href={todayData.exegesis_link}
-            className="block py-3 bg-blue-900 hover:bg-blue-800 rounded-lg text-center font-semibold"
+            className="block py-3 bg-white text-[#003E6C] hover:bg-gray-100 rounded-lg text-center font-semibold"
           >
             Deep Dive
           </Link>
           <Link
             href={todayData.saint_reflection_link}
-            className="block py-3 bg-blue-900 hover:bg-blue-800 rounded-lg text-center font-semibold"
+            className="block py-3 bg-white text-[#003E6C] hover:bg-gray-100 rounded-lg text-center font-semibold"
           >
             Saint of the Day
           </Link>
           <Link
             href={todayData.usccb_link}
-            className="block py-3 bg-blue-900 hover:bg-blue-800 rounded-lg text-center font-semibold"
+            className="block py-3 bg-white text-[#003E6C] hover:bg-gray-100 rounded-lg text-center font-semibold"
           >
             Daily Readings
           </Link>
           <Link
             href="/donate"
-            className="block py-3 bg-gold-500 hover:bg-gold-600 rounded-lg text-center font-semibold text-blue-900"
+            className="block py-3 bg-gold-500 hover:bg-gold-600 rounded-lg text-center font-semibold text-[#003E6C]"
           >
             Donate
           </Link>
           <Link
             href="/shop"
-            className="block py-3 bg-gold-500 hover:bg-gold-600 rounded-lg text-center font-semibold text-blue-900"
+            className="block py-3 bg-gold-500 hover:bg-gold-600 rounded-lg text-center font-semibold text-[#003E6C]"
           >
             Shop Bands
           </Link>
