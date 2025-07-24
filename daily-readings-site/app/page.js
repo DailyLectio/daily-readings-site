@@ -8,21 +8,29 @@ import Image from "next/image";
 export default function Home() {
   const [todayData, setTodayData] = useState(null);
 
-  useEffect(() => {
-    const today = new Date().toISOString().slice(0, 10);
-    const url =
-      "https://raw.githubusercontent.com/DailyLectio/daily-catholic-readings-data/refs/heads/main/final_daily_readings_2025_07.json";
+useEffect(() => {
+  const today = new Date().toISOString().slice(0, 10);
+  const url =
+    "https://raw.githubusercontent.com/DailyLectio/daily-catholic-readings-data/refs/heads/main/final_daily_readings_2025_07.json";
 
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data[today]) {
-          setTodayData(data[today]);
-        } else {
-          setTodayData({ error: "No data for today." });
-        }
-      });
-  }, []);
+  const fetchData = async () => {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      const data = await res.json();
+      if (data[today]) {
+        setTodayData(data[today]);
+      } else {
+        setTodayData({ error: "No data found for today." });
+      }
+    } catch (err) {
+      console.error("Failed to fetch daily readings:", err);
+      setTodayData({ error: "Unable to load daily readings. Please try again later." });
+    }
+  };
+
+  fetchData();
+}, []);
 
   if (!todayData) return <p className="text-center mt-10">Loading...</p>;
   if (todayData.error) return <p className="text-center mt-10 text-red-500">{todayData.error}</p>;
